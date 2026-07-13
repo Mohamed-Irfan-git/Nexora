@@ -7,6 +7,8 @@ export const ROUTES = {
   verifyEmail: '/verify-email',
   dashboard: '/dashboard',
   tasks: '/tasks',
+  tasksArchive: '/tasks/archive',
+  tasksTrash: '/tasks/trash',
   calendar: '/calendar',
   habits: '/habits',
   goals: '/goals',

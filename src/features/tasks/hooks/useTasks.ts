@@ -2,8 +2,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuthContext } from '@/features/auth/context/AuthContext'
 import {
   fetchTasks,
+  fetchArchivedTasks,
+  fetchTrashedTasks,
   createTask,
   updateTaskStatus,
+  updateTask,
+  archiveTask,
+  unarchiveTask,
+  trashTask,
+  restoreTask,
+  bulkUpdateTaskStatus,
   fetchActivityLog,
   fetchTaskStats,
 } from '@/features/tasks/api/tasks.api'
@@ -13,6 +21,8 @@ import { isDueToday, isOverdue, weekRange, monthRange, upcomingRange } from '@/l
 export const taskKeys = {
   all: ['tasks'] as const,
   list: () => [...taskKeys.all, 'list'] as const,
+  archived: () => [...taskKeys.all, 'archived'] as const,
+  trash: () => [...taskKeys.all, 'trash'] as const,
   stats: () => [...taskKeys.all, 'stats'] as const,
   activity: () => ['activity'] as const,
 }
@@ -22,6 +32,24 @@ export function useTasks() {
   return useQuery({
     queryKey: taskKeys.list(),
     queryFn: () => fetchTasks(user!.id),
+    enabled: !!user,
+  })
+}
+
+export function useArchivedTasks() {
+  const { user } = useAuthContext()
+  return useQuery({
+    queryKey: taskKeys.archived(),
+    queryFn: () => fetchArchivedTasks(user!.id),
+    enabled: !!user,
+  })
+}
+
+export function useTrashedTasks() {
+  const { user } = useAuthContext()
+  return useQuery({
+    queryKey: taskKeys.trash(),
+    queryFn: () => fetchTrashedTasks(user!.id),
     enabled: !!user,
   })
 }
@@ -83,6 +111,73 @@ export function useUpdateTaskStatus() {
       queryClient.invalidateQueries({ queryKey: taskKeys.all })
       queryClient.invalidateQueries({ queryKey: taskKeys.activity() })
     },
+  })
+}
+
+export function useUpdateTask() {
+  const { user } = useAuthContext()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ taskId, updates }: { taskId: string; updates: Partial<Task> }) =>
+      updateTask(user!.id, taskId, updates),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskKeys.all })
+      queryClient.invalidateQueries({ queryKey: taskKeys.activity() })
+    },
+  })
+}
+
+function useInvalidateTaskLists() {
+  const queryClient = useQueryClient()
+  return () => {
+    queryClient.invalidateQueries({ queryKey: taskKeys.all })
+    queryClient.invalidateQueries({ queryKey: taskKeys.activity() })
+  }
+}
+
+export function useArchiveTask() {
+  const { user } = useAuthContext()
+  const invalidate = useInvalidateTaskLists()
+  return useMutation({
+    mutationFn: (taskId: string) => archiveTask(user!.id, taskId),
+    onSuccess: invalidate,
+  })
+}
+
+export function useUnarchiveTask() {
+  const { user } = useAuthContext()
+  const invalidate = useInvalidateTaskLists()
+  return useMutation({
+    mutationFn: (taskId: string) => unarchiveTask(user!.id, taskId),
+    onSuccess: invalidate,
+  })
+}
+
+export function useTrashTask() {
+  const { user } = useAuthContext()
+  const invalidate = useInvalidateTaskLists()
+  return useMutation({
+    mutationFn: (taskId: string) => trashTask(user!.id, taskId),
+    onSuccess: invalidate,
+  })
+}
+
+export function useRestoreTask() {
+  const { user } = useAuthContext()
+  const invalidate = useInvalidateTaskLists()
+  return useMutation({
+    mutationFn: (taskId: string) => restoreTask(user!.id, taskId),
+    onSuccess: invalidate,
+  })
+}
+
+export function useBulkUpdateTaskStatus() {
+  const { user } = useAuthContext()
+  const invalidate = useInvalidateTaskLists()
+  return useMutation({
+    mutationFn: ({ taskIds, status }: { taskIds: string[]; status: Task['status'] }) =>
+      bulkUpdateTaskStatus(user!.id, taskIds, status),
+    onSuccess: invalidate,
   })
 }
 

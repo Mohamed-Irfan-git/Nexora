@@ -10,6 +10,7 @@ import { AuthLayout } from '@/features/auth/components/AuthLayout'
 import { OAuthButtons } from '@/features/auth/components/OAuthButtons'
 import { useAuthContext } from '@/features/auth/context/AuthContext'
 import { loginSchema, type LoginFormData } from '@/features/auth/schemas/auth.schemas'
+import { formatAuthError } from '@/lib/supabase/validate-env'
 import { ROUTES } from '@/lib/constants/routes'
 import { useToast } from '@/hooks/use-toast'
 
@@ -36,7 +37,7 @@ export function LoginPage() {
       toast({
         variant: 'destructive',
         title: 'Login failed',
-        description: err instanceof Error ? err.message : 'Invalid credentials',
+        description: formatAuthError(err),
       })
     } finally {
       setLoading(false)

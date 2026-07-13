@@ -8,6 +8,9 @@ import { VerifyEmailPage } from '@/features/auth/components/VerifyEmailPage'
 import { AppShell } from '@/components/layout/AppShell'
 import { PlaceholderPage } from '@/components/feedback/PlaceholderPage'
 import { DashboardPage } from '@/features/dashboard/components/DashboardPage'
+import { TasksPage } from '@/features/tasks/components/TasksPage'
+import { ArchivedTasksPage } from '@/features/tasks/components/ArchivedTasksPage'
+import { TrashedTasksPage } from '@/features/tasks/components/TrashedTasksPage'
 import { SettingsLayout } from '@/features/settings/components/SettingsLayout'
 import { ProfileSettingsPage } from '@/features/settings/components/ProfileSettingsPage'
 import { AppearanceSettingsPage } from '@/features/settings/components/AppearanceSettingsPage'
@@ -29,7 +32,9 @@ export function AppRouter() {
         <Route path={ROUTES.verifyEmail} element={<VerifyEmailPage />} />
         <Route element={<AppShell />}>
           <Route path={ROUTES.dashboard} element={<DashboardPage />} />
-          <Route path={ROUTES.tasks} element={<PlaceholderPage title="Tasks" description="Full task management — coming in Phase 4" />} />
+          <Route path={ROUTES.tasks} element={<TasksPage />} />
+          <Route path={ROUTES.tasksArchive} element={<ArchivedTasksPage />} />
+          <Route path={ROUTES.tasksTrash} element={<TrashedTasksPage />} />
           <Route path={ROUTES.calendar} element={<PlaceholderPage title="Calendar" description="Calendar views — coming in Phase 5" />} />
           <Route path={ROUTES.habits} element={<PlaceholderPage title="Habits" description="Habit tracking — coming in Phase 5" />} />
           <Route path={ROUTES.goals} element={<PlaceholderPage title="Goals" description="Goal tracking — coming in Phase 6" />} />
