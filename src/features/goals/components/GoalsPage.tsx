@@ -1,18 +1,19 @@
 import { useMemo, useState } from 'react'
-import { Target, Plus, CheckCircle2, Circle } from 'lucide-react'
+import { Target, Plus, CheckCircle2, Circle, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { EmptyState } from '@/components/feedback/EmptyState'
 import { ProgressRing } from '@/components/data-display/ProgressRing'
-import { useCreateGoal, useCreateMilestone, useGoals, useMilestones, useToggleMilestone, useUpdateGoal } from '@/features/goals/hooks/useGoals'
+import { useCreateGoal, useCreateMilestone, useDeleteGoal, useGoals, useMilestones, useToggleMilestone, useUpdateGoal } from '@/features/goals/hooks/useGoals'
 import type { Goal } from '@/features/goals/types/goal.types'
 
 export function GoalsPage() {
   const { data: goals = [], isLoading } = useGoals()
   const createGoal = useCreateGoal()
   const updateGoal = useUpdateGoal()
+  const deleteGoal = useDeleteGoal()
   const [selectedGoalId, setSelectedGoalId] = useState<string | null>(null)
   const selectedGoal = useMemo(() => goals.find((g) => g.id === selectedGoalId) ?? null, [goals, selectedGoalId])
   const { data: milestones = [] } = useMilestones(selectedGoalId)
@@ -86,7 +87,23 @@ export function GoalsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{selectedGoal ? 'Milestones' : 'Select a goal'}</CardTitle>
+                  <CardTitle className="flex items-center justify-between">
+                    <span>{selectedGoal ? 'Milestones' : 'Select a goal'}</span>
+                    {selectedGoal && (
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-xs text-destructive hover:bg-destructive/10"
+                        onClick={async () => {
+                          if (!window.confirm('Delete this goal and its milestones?')) return
+                          await deleteGoal.mutateAsync(selectedGoal.id)
+                          setSelectedGoalId(null)
+                        }}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                        Delete goal
+                      </button>
+                    )}
+                  </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {!selectedGoal ? (

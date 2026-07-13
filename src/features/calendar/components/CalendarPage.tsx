@@ -111,7 +111,6 @@ export function CalendarPage() {
     startAt.setHours(9, 0, 0, 0)
     await createEvent.mutateAsync({ title: newTitle.trim(), start_at: startAt.toISOString(), end_at: null })
     setNewTitle('')
-    setSelectedDay(null)
   }
 
   const onDragEnd = async (e: DragEndEvent) => {
@@ -220,14 +219,14 @@ export function CalendarPage() {
                 const selected = selectedDay ? isSameDay(day, selectedDay) : false
 
                 return (
-                  <DroppableDay
+                    <DroppableDay
                     key={key}
                     id={key}
                     className={cn(
                       'rounded-2xl border p-2 transition-colors',
                       !inMonth && 'opacity-50',
-                      selected && 'border-primary',
-                      isToday && 'bg-primary/5'
+                      selected && 'border-primary bg-primary/10',
+                      !selected && isToday && 'bg-primary/5'
                     )}
                   >
                     <button type="button" onClick={() => setSelectedDay(day)} className="flex w-full items-center justify-between">

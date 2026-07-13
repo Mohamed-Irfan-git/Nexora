@@ -64,6 +64,15 @@ export async function updateGoal(userId: string, goalId: string, updates: Partia
   if (error) throw error
 }
 
+export async function deleteGoal(userId: string, goalId: string): Promise<void> {
+  const { error } = await supabase
+    .from('goals')
+    .update({ deleted_at: new Date().toISOString(), is_archived: true })
+    .eq('id', goalId)
+    .eq('user_id', userId)
+  if (error) throw error
+}
+
 export async function fetchMilestones(userId: string, goalId: string): Promise<Milestone[]> {
   const { data, error } = await supabase
     .from('milestones')

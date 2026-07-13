@@ -34,6 +34,7 @@ export interface Database {
       categories: TableDef<Record<string, unknown>>
       tags: TableDef<Record<string, unknown>>
       notes: TableDef<Record<string, unknown>>
+      note_folders: TableDef<Record<string, unknown>>
     }
     Views: Record<string, never>
     Functions: Record<string, never>

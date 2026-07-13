@@ -7,6 +7,7 @@ import {
   fetchMilestones,
   toggleMilestone,
   updateGoal,
+  deleteGoal,
 } from '@/features/goals/api/goals.api'
 import type { CreateGoalInput, Goal, Milestone } from '@/features/goals/types/goal.types'
 
@@ -78,6 +79,18 @@ export function useToggleMilestone(goalId: string | null) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: goalKeys.all })
       if (goalId) qc.invalidateQueries({ queryKey: goalKeys.milestones(goalId) })
+    },
+  })
+}
+
+export function useDeleteGoal() {
+  const { user } = useAuthContext()
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (goalId: string) => deleteGoal(user!.id, goalId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: goalKeys.all })
+      qc.invalidateQueries({ queryKey: ['dashboard'] })
     },
   })
 }

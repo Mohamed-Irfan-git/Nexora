@@ -19,4 +19,7 @@ export const ROUTES = {
   settings: '/settings',
   settingsProfile: '/settings/profile',
   settingsAppearance: '/settings/appearance',
+  settingsPreferences: '/settings/preferences',
+  settingsNotifications: '/settings/notifications',
+  settingsData: '/settings/data',
 } as const

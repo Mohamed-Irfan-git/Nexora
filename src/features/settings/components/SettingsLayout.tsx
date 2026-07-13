@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { Palette, User } from 'lucide-react'
+import { Bell, Database, Globe, Palette, User } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ROUTES } from '@/lib/constants/routes'
 import { cn } from '@/lib/utils/cn'
@@ -7,6 +7,9 @@ import { cn } from '@/lib/utils/cn'
 const settingsNav = [
   { to: ROUTES.settingsProfile, label: 'Profile', icon: User },
   { to: ROUTES.settingsAppearance, label: 'Appearance', icon: Palette },
+  { to: ROUTES.settingsPreferences, label: 'Preferences', icon: Globe },
+  { to: ROUTES.settingsNotifications, label: 'Notifications', icon: Bell },
+  { to: ROUTES.settingsData, label: 'Data', icon: Database },
 ]
 
 export function SettingsLayout() {

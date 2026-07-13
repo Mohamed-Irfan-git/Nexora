@@ -183,6 +183,9 @@ export function AppShell() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => navigate(ROUTES.settingsProfile)}>Profile settings</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(ROUTES.settingsPreferences)}>Preferences</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(ROUTES.settingsNotifications)}>Notifications</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(ROUTES.settingsData)}>Data</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate(ROUTES.settingsAppearance)}>Appearance</DropdownMenuItem>
               <DropdownMenuItem onClick={toggleTheme}>Toggle theme</DropdownMenuItem>
               <DropdownMenuSeparator />
