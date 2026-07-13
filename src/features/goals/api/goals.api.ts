@@ -63,14 +63,21 @@ export async function updateGoal(userId: string, goalId: string, updates: Partia
   const { error } = await supabase.from('goals').update(updates).eq('id', goalId).eq('user_id', userId)
   if (error) throw error
 }
+export async function deleteGoal(userId: string, goalId: string) {
+  const { data, error } = await supabase
+    .from("goals")
+    .update({
+      deleted_at: new Date().toISOString(),
+      is_archived: true,
+    })
+    .eq("id", goalId)
+    .eq("user_id", userId)
+    .select();
 
-export async function deleteGoal(userId: string, goalId: string): Promise<void> {
-  const { error } = await supabase
-    .from('goals')
-    .update({ deleted_at: new Date().toISOString(), is_archived: true })
-    .eq('id', goalId)
-    .eq('user_id', userId)
-  if (error) throw error
+  console.log("Data:", data);
+  console.log("Error:", error);
+
+  if (error) throw error;
 }
 
 export async function fetchMilestones(userId: string, goalId: string): Promise<Milestone[]> {
