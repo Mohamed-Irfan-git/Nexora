@@ -11,6 +11,10 @@ import { DashboardPage } from '@/features/dashboard/components/DashboardPage'
 import { TasksPage } from '@/features/tasks/components/TasksPage'
 import { ArchivedTasksPage } from '@/features/tasks/components/ArchivedTasksPage'
 import { TrashedTasksPage } from '@/features/tasks/components/TrashedTasksPage'
+import { CalendarPage } from '@/features/calendar/components/CalendarPage'
+import { HabitsPage } from '@/features/habits/components/HabitsPage'
+import { GoalsPage } from '@/features/goals/components/GoalsPage'
+import { ExpensesPage } from '@/features/expenses/components/ExpensesPage'
 import { SettingsLayout } from '@/features/settings/components/SettingsLayout'
 import { ProfileSettingsPage } from '@/features/settings/components/ProfileSettingsPage'
 import { AppearanceSettingsPage } from '@/features/settings/components/AppearanceSettingsPage'
@@ -35,10 +39,10 @@ export function AppRouter() {
           <Route path={ROUTES.tasks} element={<TasksPage />} />
           <Route path={ROUTES.tasksArchive} element={<ArchivedTasksPage />} />
           <Route path={ROUTES.tasksTrash} element={<TrashedTasksPage />} />
-          <Route path={ROUTES.calendar} element={<PlaceholderPage title="Calendar" description="Calendar views — coming in Phase 5" />} />
-          <Route path={ROUTES.habits} element={<PlaceholderPage title="Habits" description="Habit tracking — coming in Phase 5" />} />
-          <Route path={ROUTES.goals} element={<PlaceholderPage title="Goals" description="Goal tracking — coming in Phase 6" />} />
-          <Route path={ROUTES.expenses} element={<PlaceholderPage title="Expenses" description="Expense tracker — coming in Phase 6" />} />
+          <Route path={ROUTES.calendar} element={<CalendarPage />} />
+          <Route path={ROUTES.habits} element={<HabitsPage />} />
+          <Route path={ROUTES.goals} element={<GoalsPage />} />
+          <Route path={ROUTES.expenses} element={<ExpensesPage />} />
           <Route path={ROUTES.notes} element={<PlaceholderPage title="Notes" description="Notes — coming in Phase 7" />} />
           <Route path={ROUTES.analytics} element={<PlaceholderPage title="Analytics" description="Analytics — coming in Phase 7" />} />
           <Route path={ROUTES.reports} element={<PlaceholderPage title="Reports" description="Reports — coming in Phase 7" />} />

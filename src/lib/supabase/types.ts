@@ -19,14 +19,17 @@ export interface Database {
       profiles: TableDef<Profile, Partial<Profile> & { id: string }>
       user_settings: TableDef<Record<string, unknown>>
       tasks: TableDef<TaskRow, Partial<TaskRow> & { user_id: string; title: string }>
+      calendar_events: TableDef<Record<string, unknown>>
       activity_log: TableDef<
         ActivityLogRow,
         Partial<ActivityLogRow> & { user_id: string; entity_type: string; entity_id: string; action: string }
       >
+      milestones: TableDef<Record<string, unknown>>
       habits: TableDef<Record<string, unknown>>
       habit_completions: TableDef<Record<string, unknown>>
       transactions: TableDef<Record<string, unknown>>
       budgets: TableDef<Record<string, unknown>>
+      payment_methods: TableDef<Record<string, unknown>>
       goals: TableDef<Record<string, unknown>>
       categories: TableDef<Record<string, unknown>>
       tags: TableDef<Record<string, unknown>>
