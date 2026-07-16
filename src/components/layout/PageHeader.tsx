@@ -4,8 +4,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
   return (
     <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{title}</h1>
-        {description && <p className="mt-1 text-muted-foreground">{description}</p>}
+        <h1 className="text-3xl font-bold tracking-[-0.045em] md:text-4xl">{title}</h1>
+        {description && <p className="mt-1.5 text-sm font-medium text-muted-foreground">{description}</p>}
       </div>
       {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
     </div>
