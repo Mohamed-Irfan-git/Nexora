@@ -22,7 +22,7 @@ export function StatCard({ title, value, subtitle, icon, trend, className, accen
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md',
+        'relative overflow-hidden rounded-2xl border border-border/70 bg-card/90 p-5 shadow-[0_8px_30px_rgb(48_38_91/0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_38px_rgb(48_38_91/0.09)]',
         className
       )}
     >
@@ -30,7 +30,7 @@ export function StatCard({ title, value, subtitle, icon, trend, className, accen
       <div className="relative flex items-start justify-between">
         <div className="space-y-1">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="text-2xl font-bold tracking-tight">{value}</p>
+          <p className="text-3xl font-bold tracking-[-0.04em]">{value}</p>
           {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
           {trend && (
             <p className={cn('text-xs font-medium', trend.value >= 0 ? 'text-emerald-600' : 'text-red-500')}>
@@ -39,7 +39,7 @@ export function StatCard({ title, value, subtitle, icon, trend, className, accen
           )}
         </div>
         {icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background/80 shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/60 bg-background/80 shadow-sm">
             {icon}
           </div>
         )}

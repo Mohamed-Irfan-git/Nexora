@@ -69,24 +69,28 @@ export function AppShell() {
 
   return (
     <div className="flex min-h-dvh">
-      <aside className="glass hidden w-64 shrink-0 flex-col border-r lg:flex">
-        <div className="flex h-16 items-center gap-2 border-b px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600">
+      <aside className="glass hidden w-[17.5rem] shrink-0 flex-col border-r lg:flex">
+        <div className="flex h-20 items-center gap-3 border-b border-border/60 px-6">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 shadow-lg shadow-indigo-500/25">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight">Nexora</span>
+          <div>
+            <span className="block text-lg font-bold tracking-[-0.04em]">Nexora</span>
+            <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Your daily flow</span>
+          </div>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
+          <p className="px-3 pb-2 pt-2 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/70">Workspace</p>
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
+                  'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200',
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20'
+                    : 'text-muted-foreground hover:bg-accent/70 hover:text-foreground'
                 )
               }
             >
@@ -94,15 +98,16 @@ export function AppShell() {
               {label}
             </NavLink>
           ))}
-          <div className="my-2 h-px bg-border" />
+          <div className="my-4 h-px bg-border/70" />
+          <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/70">Account</p>
           <NavLink
             to={ROUTES.settingsProfile}
             className={({ isActive }) =>
               cn(
-                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200',
                 isActive
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20'
+                  : 'text-muted-foreground hover:bg-accent/70 hover:text-foreground'
               )
             }
           >
@@ -110,8 +115,8 @@ export function AppShell() {
             Settings
           </NavLink>
         </nav>
-        <div className="border-t p-4">
-          <Button variant="ghost" size="sm" className="w-full justify-start gap-2" onClick={toggleTheme}>
+        <div className="border-t border-border/60 p-4">
+          <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-muted-foreground" onClick={toggleTheme}>
             {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             {theme === 'system' ? 'System theme' : resolvedTheme === 'dark' ? 'Light mode' : 'Dark mode'}
           </Button>
@@ -121,7 +126,7 @@ export function AppShell() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setMobileMenuOpen(false)} />
-          <aside className="glass absolute left-0 top-0 flex h-full w-72 flex-col border-r">
+          <aside className="glass absolute left-0 top-0 flex h-full w-72 flex-col border-r shadow-2xl">
             <div className="flex h-16 items-center justify-between border-b px-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
@@ -156,18 +161,17 @@ export function AppShell() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col pb-16 lg:pb-0">
-        <header className="glass sticky top-0 z-30 flex h-16 items-center justify-between border-b px-4 md:px-6">
+        <header className="glass sticky top-0 z-30 flex h-20 items-center justify-between border-b border-border/60 px-4 md:px-8">
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileMenuOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
           <div className="hidden items-center gap-2 lg:flex">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <span className="font-bold tracking-tight">Nexora</span>
+            <span className="text-sm font-semibold text-muted-foreground">Personal workspace</span>
           </div>
           <div className="lg:hidden" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full border border-border/60 bg-card/60 shadow-sm">
                 <Avatar>
                   <AvatarImage src={profile?.avatar_url ?? undefined} alt={profile?.full_name ?? 'User'} />
                   <AvatarFallback>{getInitials(profile?.full_name || profile?.email || 'U')}</AvatarFallback>
@@ -197,15 +201,17 @@ export function AppShell() {
           </DropdownMenu>
         </header>
 
-        <main className="flex-1 overflow-auto p-4 md:p-6">
-          <AnimatePresence mode="wait">
-            <PageTransition routeKey={location.pathname}>
-              <Outlet />
-            </PageTransition>
-          </AnimatePresence>
+        <main className="flex-1 overflow-auto p-5 md:p-8">
+          <div className="mx-auto w-full max-w-[1600px]">
+            <AnimatePresence mode="wait">
+              <PageTransition routeKey={location.pathname}>
+                <Outlet />
+              </PageTransition>
+            </AnimatePresence>
+          </div>
         </main>
 
-        <nav className="glass fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t px-2 py-2 lg:hidden">
+        <nav className="glass fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 px-2 py-2 lg:hidden">
           {mobileNavItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
